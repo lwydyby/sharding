@@ -1,4 +1,4 @@
-module gorm.io/sharding
+module github.com/lwydyby/sharding
 
 go 1.20
 
