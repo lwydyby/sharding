@@ -352,7 +352,7 @@ func (s *Sharding) resolve(query string, args ...interface{}) (ftQuery, stQuery,
 
 			newTable = &sqlparser.TableName{Name: &sqlparser.Ident{Name: tableName + suffix}}
 
-			fillID := true
+			fillID := false
 			if isInsert {
 				for _, name := range insertNames {
 					if name.Name == "id" {
