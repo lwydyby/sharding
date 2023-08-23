@@ -125,3 +125,24 @@ func (m ShardingMigrator) splitShardingDsts(dsts ...interface{}) (shardingDsts [
 	}
 	return
 }
+
+func (m ShardingMigrator) BuildIndexOptions(opts []schema.IndexOption, stmt *gorm.Statement) (results []interface{}) {
+	for _, opt := range opts {
+		str := stmt.Quote(opt.DBName)
+		if opt.Expression != "" {
+			str = opt.Expression
+		} else if opt.Length > 0 {
+			str += fmt.Sprintf("(%d)", opt.Length)
+		}
+
+		if opt.Collate != "" {
+			str += " COLLATE " + opt.Collate
+		}
+
+		if opt.Sort != "" {
+			str += " " + opt.Sort
+		}
+		results = append(results, clause.Expr{SQL: str})
+	}
+	return
+}
